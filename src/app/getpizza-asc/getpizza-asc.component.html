@@ -1,0 +1,49 @@
+<app-menu></app-menu>
+<div class="container mt-2">
+<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Filter
+  </a>
+  <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+    <li><a class="dropdown-item" routerLink="/customergetpizza" routerLinkActive="active">Normal</a></li>
+    <li><a class="dropdown-item" routerLink="/getpizzaAsc" routerLinkActive="active">Min to Max</a></li>
+    <li><a class="dropdown-item" routerLink="/getpizzaDesc" routerLinkActive="active">Max to Min</a></li>
+  </ul>
+
+  <h2 class="text-success mt-2">Available Pizzas</h2>
+  <h6 class="alert alert-warning mt-2" *ngIf="result">{{result.message | json}}</h6>
+  <div *ngIf="pizza!=0; else elseblock">
+    <table class="table table-bordered mt-3">
+      <thead><tr class="bg-warning text-white">
+          <th>Pizza Id</th>
+          <th>Pizza Name</th>
+          <th>Pizza Type</th>
+          <th>Pizza Cost</th>
+          <th>Available Quantity</th>
+          <th>Pizza Description</th>
+          <th>Add To Cart</th>
+           </tr>
+      </thead>
+       <tbody>
+          <tr *ngFor="let p of pizza">
+             <td>{{p.pizzaId}}</td>
+             <td>{{p.pizzaName}}</td>
+             <td>{{p.pizzaType}}</td>
+             <td>{{p.pizzaCost | currency:'INR'}}</td>
+             <td>{{p.availableQuantity}}</td>
+             <td>{{p.pizzaDescription}}</td>
+             <td>
+              <button class="btn btn-primary" (click)="addToCart(p.pizzaId)" *ngIf="p.availableQuantity>0; else elseBlock">Add To Cart</button>
+             <ng-template #elseBlock>
+               <button class="btn btn-primary" disabled (click)="addToCart(p.pizzaId)">Add To Cart</button>
+             </ng-template>
+             </td>           
+           </tr>
+      </tbody>
+    
+    </table>
+  </div>
+  
+  <ng-template #elseblock>
+      <h4 class="btn-danger text-white">No Records Found</h4>
+  </ng-template>
+</div>

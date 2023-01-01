@@ -1,0 +1,28 @@
+<app-admin-menu></app-admin-menu>
+<div class="container">
+    <h3 class="mt-5">Search Pizza By Id</h3>
+<hr/>
+<form #pizza1="ngForm" (submit)="getPizzaById(pizza1.value)">
+    <div class="form-group mt-3">
+            <input #id="ngModel" placeholder="Pizza Id" type="number" [class.is-invalid]="id.invalid && id.touched" required pattern="^\d{5}$" name="pizzaId" ngModel class="form-control">
+    </div>
+    <div *ngIf="id.invalid && id.touched">
+        <small class="text-danger" *ngIf="id.errors!['required']">Pizza Id is Must</small>
+        <small class="text-danger" *ngIf="id.errors!['pattern']">Pizza Id must have 5 digits</small>
+    </div>
+    <hr/>
+    <div>
+         <button [disabled]="id.invalid" class="btn btn-warning m-2">Search</button>
+    </div>
+    <h3 class="text-danger" *ngIf="msg">{{msg}}</h3>
+    <div *ngIf="pizza.pizzaId>0">
+         <h4>Pizza Id : {{pizza.pizzaId}}</h4>
+         <h4>Pizza Name : {{pizza.pizzaName}}</h4>
+         <h4>Pizza Type : {{pizza.pizzaType}}</h4>
+         <h4>Pizza Cost : {{pizza.pizzaCost | currency:'INR'}}</h4>
+         <h4>Available pizzas: {{pizza.availableQuantity}}</h4>            
+         <h4>Pizza Description : {{pizza.pizzaDescription}}</h4>
+         <button class="btn btn-primary" (click)="updateCost(pizza.pizzaId)">Update</button>              
+    </div>
+</form>
+</div>

@@ -1,0 +1,62 @@
+<app-menu></app-menu>
+<div class="container">
+    <h3 class="mt-5"> Upadate Customer Details</h3>
+    <hr>
+    <form #customer2="ngForm" (submit)="updateCustomer(customer2)">
+        <div class="form group mt-3">
+            <label >
+                Customer Id
+            </label>
+            <input name="customerId" [(ngModel)]="customer.customerId" readonly class="form-control  mt-2">
+        </div>
+        <div class="form group mt-3">
+            <label >
+                Customer Name
+            </label>
+            <input required #customerId="ngModel" [class.is-invalid]="customerId.touched && customerId.invalid" name="customerName" [(ngModel)]="customer.customerName" class="form-control  mt-2" minlength="5" maxlength="20">
+            <div *ngIf="customerId.invalid && customerId.touched">
+                <small *ngIf="customerId.errors!['required']" class="text-danger">Customer name is Must</small>
+                <small *ngIf="customerId.errors!['minlength']" class="text-danger">Customer name Must have minimum 5 characters</small>
+                <small *ngIf="customerId.errors!['maxlength']" class="text-danger">Customer name Must have maximum 20 characters</small>
+            </div>       
+        </div>
+        <div class="form group mt-3">
+            <label >
+                Customer Mobile
+            </label>
+            <input required #customerMobile="ngModel" readonly pattern="^\d{10}$" type="number" [class.is-invalid]="customerMobile.touched && customerMobile.invalid"  name="customerMobile" [(ngModel)]="customer.customerMobile" class="form-control  mt-2">
+            <div *ngIf="customerMobile.invalid && customerMobile.touched">
+                <small  class="text-danger" *ngIf="customerMobile.errors!['required']">Customer Mobile No is Must</small>
+                <small  class="text-danger" *ngIf="customerMobile.errors!['pattern']">Customer Mobile No Must be 10 digits</small>
+     
+             </div>
+        </div>
+        <div class="form group mt-3">
+            <label >
+                Customer Email
+            </label>
+            <input required #customerEmailId="ngModel" readonly pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" [class.is-invalid]="customerEmailId.touched && customerEmailId.invalid" type="email" name="customerEmailId" [(ngModel)]="customer.customerEmailId" class="form-control  mt-2">
+            <div *ngIf="customerEmailId.invalid && customerEmailId.touched">
+                <small *ngIf="customerEmailId.errors!['required']" class="text-danger">Customer Email is Must</small>
+                <small *ngIf="customerEmailId.errors!['pattern']" class="text-danger">Customer Email is not valid</small>
+            </div>
+        </div>
+        <div class="form group mt-3">
+            <label >
+                Customer Address
+            </label>
+            <select required (blur)="validateAddress(customerAddress.value)" (change)="validateAddress(customerAddress.value)" #customerAddress="ngModel" [class.is-invalid]="customerAddress.touched && customerAddress.invalid" name="customerAddress" [(ngModel)]="customer.customerAddress" class="form-control  mt-2">
+                <option value="default">------Select Your Address------</option>
+                <option *ngFor="let address of addresses">{{address}}</option>
+            </select>
+            <small [class.d-none]="!hasError || customerAddress.untouched" class="text-danger">Address is Must</small>
+        </div>
+        <div >
+            <button [disabled]="customer2.form.invalid || hasError" class="btn btn-warning mt-4 form-control">Update</button>&nbsp;
+          
+        </div>
+
+    </form>
+
+
+</div>

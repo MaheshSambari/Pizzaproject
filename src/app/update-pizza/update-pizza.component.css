@@ -1,0 +1,15 @@
+.updatePizza-form,
+.updatePizza-form *{
+    box-sizing: border-box;
+}
+
+.updatePizza-form{
+    max-width: 350px;
+    margin: auto;
+    border-radius: 1px;
+    overflow: hidden;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+
+    padding: 15px;
+    background: white;
+}

@@ -1,0 +1,47 @@
+<app-admin-menu></app-admin-menu>
+<div class="container">
+    <h3 class=" mt-5">Search Pizza Order By Order Date</h3>
+<hr/>
+<form #pizzaorder2="ngForm" (submit)="getPizzaOrderByDate(pizzaorder2.value)">
+    <div class="form-group mt-2">
+        <input #date="ngModel" type="date" placeholder="DD-MM-YYYY"  [class.is-invalid]="date.invalid && date.touched" required pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))" name="pizzaOrderDate" ngModel class="form-control">
+    </div>
+    <div *ngIf="date.invalid &&date.touched">
+        <small class="text-danger" *ngIf="date.errors!['required']">Order date is Must</small>
+        <small class="text-danger" *ngIf="date.errors!['pattern']">Order date must be in DD-MM-YYYYformat</small>
+    </div>
+    <hr/>
+    <div>
+         <button class="btn btn-warning  m-2" [disabled]="pizzaorder2.invalid">Search</button>
+    </div>
+    </form>
+    <h3 class="text-danger" *ngIf="msg">{{msg.message}}</h3>
+<div *ngIf="pizzaorder!=0">
+        <table class="table table-bordered mt-3">
+            <thead><tr class="bg-warning text-white">
+                <th>Pizza Order Id</th>
+                <th>Pizza  Order Date</th>
+                <th>Transaction Mode</th>
+                <th>Quantity</th>
+                <th>Size</th>
+                <th>Total Cost</th>
+                <th>Pizza Id</th>
+                <th>Order Id</th>
+                 </tr>
+            </thead>
+             <tbody>
+                <tr *ngFor="let po of pizzaorder">
+                   <td>{{po.pizzaorderId}}</td>
+                   <td>{{po.orderDate}}</td>
+                   <td>{{po.transactionMode}}</td>
+                   <td>{{po.quantity}}</td>
+                   <td>{{po.size}}</td>
+                   <td>{{po.totalCost | currency:'INR'}}</td>
+                   <td>{{po.pizza.pizzaId}}</td>
+                   <td>{{po.order.orderId}}</td>
+                   <!-- <td><button (click)="deletePizzaorders(po.pizzaorderId)" class="btn btn-danger">Delete</button></td> -->
+                  </tr>
+            </tbody>
+          
+          </table>
+</div>    

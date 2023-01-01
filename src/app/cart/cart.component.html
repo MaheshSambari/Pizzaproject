@@ -1,0 +1,47 @@
+<app-menu></app-menu>
+<div class="container">
+    <h3 class="mt-5" align="center">My Cart </h3>
+<hr/>
+<!-- <form #cart="ngForm" (submit)="getCartById(cart.value)">
+    <div class="form-group mt-3">
+        <input #id="ngModel" placeholder="Customer Id" type="number" [class.is-invalid]="id.invalid && id.touched" required pattern="^\d{5}$" name="customerId" ngModel class="form-control">
+    </div>
+    <div *ngIf="id.invalid && id.touched">
+        <small class="text-danger" *ngIf="id.errors!['required']">Customer Id is Must</small>
+        <small class="text-danger" *ngIf="id.errors!['pattern']">Customer Id must have 5 digits</small>
+    </div>
+    <hr/>
+    <div>
+         <button [disabled]="id.invalid" class="btn btn-warning m-2">Search</button>
+    </div>
+    </form> -->
+    <h3 class="text-danger" *ngIf="msg" align="center">{{msg.message}}</h3>
+          <div *ngIf="cart1.length!=0">
+            <table class="table table-bordered mt-3">
+                <thead><tr class="bg-warning text-white">
+                    <th>Pizza Id</th>
+                    <th>Quantity</th>
+                    <th>Size</th>
+                    <th>Total Amount</th>
+                    <th>Update</th>
+                    <th>Delete</th>
+                     </tr>
+                </thead>
+                 <tbody>
+                    <tr *ngFor="let cartitem of cart1">
+                       <td>{{cartitem.pizzaId}}</td>
+                       <td>{{cartitem.quantity}}</td>
+                       <td>{{cartitem.size}}</td>
+                       <td>{{cartitem.totalAmount | currency:'INR'}}</td>
+                      <td><button class="btn btn-primary" (click)="updateCart(cartitem.sno)">Update</button></td>
+                      <td><button class="btn btn-danger" (click)="deleteCart(cartitem.sno)">Delete</button></td>
+                      </tr>
+                </tbody>         
+              </table>
+              <hr/>
+              <div class="mt-2" align="center">
+              <button class="btn btn-primary" (click)="addMore()">Browse More</button> &nbsp;
+              <button class="btn btn-warning" (click)="placeOrder()">Make Payment</button>
+              </div>
+              </div>
+</div>

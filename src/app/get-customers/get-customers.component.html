@@ -1,0 +1,37 @@
+<app-admin-menu></app-admin-menu>
+<div class="container">
+  <h2 class="text-success mt-3">Customers</h2>
+  <h6 class="alert alert-danger mt-3" *ngIf="result">{{result.message | json}}</h6>
+  <div *ngIf="customers!=0; else elseblock">
+      <table class="table table-bordered mt-3">
+          <thead><tr class="bg-warning text-white">
+              <th>Customer Id</th>
+              <th>Customer Name</th>
+              <th>Customer Mobile</th>
+              <th>Customer Mail</th>
+              <th>Customer Address</th>
+              <th>User Id</th>
+              <!-- <th>Update</th>
+              <th>Delete</th> -->
+               </tr>
+          </thead>
+           <tbody>
+              <tr *ngFor="let c of customers">
+                 <td>{{c.customerId}}</td>
+                 <td>{{c.customerName}}</td>
+                 <td>{{c.customerMobile}}</td>
+                 <td>{{c.customerEmailId}}</td>
+                 <td>{{c.customerAddress}}</td>
+                 <td>{{c.userModel.userId}}</td>
+                 <!-- <td><button class="btn btn-primary" (click)="updateCost(c.customerId)">Update</button></td>
+                 <td><button class="btn btn-danger" (click)="deletePizza(c.customerId)">Delete</button></td> -->
+                </tr>
+          </tbody>
+        
+        </table>
+  </div>
+  
+  <ng-template #elseblock>
+      <h4 class="btn-danger text-white">No Records Found</h4>
+  </ng-template>
+</div>

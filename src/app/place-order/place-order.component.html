@@ -1,0 +1,46 @@
+<app-menu></app-menu>
+<div class="container">
+    <h3 class="mt-5">Placing Order</h3>
+    <hr/>
+    <h6 class="alert alert-success" *ngIf="sresult">{{sresult.successMessage | json}}</h6>
+    <h6 class="alert alert-danger" *ngIf="result">{{result.message | json}}</h6>
+    <form #placeorder="ngForm" (submit)="placeOrder(placeorder)">
+    <div class="form-group mt-3">
+        <label class="mt-1">
+            Customer Id
+        </label>
+        <input #cid="ngModel" type="number" placeholder="Customer Id" readonly [class.is-invalid]="cid.invalid && cid.touched" required pattern="^\d{5}$" name="orderCustomerId" [(ngModel)]="placeModel.orderCustomerId" class="form-control mt-1">
+    </div>
+    <div *ngIf="cid.invalid && cid.touched">
+        <small class="text-danger" *ngIf="cid.errors!['required']">Customer Id is Must</small>
+        <small class="text-danger" *ngIf="cid.errors!['pattern']">Customer Id must have 5 digits</small>
+    </div>
+    <div class="form-group mt-3">
+            <select (blur)="validateTransaction(transaction.value)" (change)="validateTransaction(transaction.value)" #transaction="ngModel" required type="text" [class.is-invalid]="transaction.touched && hasError" name="transactionMode" [(ngModel)]="placeModel.transactionMode" class="form-control mt-1">
+                <option value="default">--Select Transaction Mode--</option>
+                <option *ngFor="let transaction of transactionmodes">{{transaction}}</option>
+             </select>   
+                <small [class.d-none]="!hasError || transaction.untouched" class="text-danger">Size is Must</small>
+    </div>
+    <div class="form-group mt-3">
+        <textarea #loc="ngModel" placeholder="Delivery Location" [class.is-invalid]="loc.invalid && loc.touched" required minlength="12" maxlength="100" name="orderLocation" [(ngModel)]="placeModel.orderLocation" class="form-control mt-1"></textarea>
+    </div>
+    <div *ngIf="loc.invalid && loc.touched">
+            <small class="text-danger" *ngIf="loc.errors!['required']">Delivery Location is Must</small>
+            <small class="text-danger" *ngIf="loc.errors!['minlength']">Delivery Location must have minimum 12 characters</small>
+            <small class="text-danger" *ngIf="loc.errors!['maxlength']">Delivery Location must have maximum 100 characters only</small>
+    </div>
+    <div class="form-group mt-3">
+    <textarea #desc="ngModel" placeholder="Order Description" [class.is-invalid]="desc.invalid && desc.touched" required minlength="12" maxlength="100" name="orderDescription" [(ngModel)]="placeModel.orderDescription" class="form-control mt-1"></textarea>
+    </div>
+    <div *ngIf="desc.invalid && desc.touched">
+            <small class="text-danger" *ngIf="desc.errors!['required']">Order Description is Must</small>
+            <small class="text-danger" *ngIf="desc.errors!['minlength']">Order Description must have minimum 12 characters</small>
+            <small class="text-danger" *ngIf="desc.errors!['maxlength']">Order Description must have maximum 100 characters only</small>
+    </div>
+
+        <hr/>
+        <button [disabled]="placeorder.invalid || hasError" type="submit" class="btn btn-warning form-control">Place Your Order</button>
+        <button type="submit" class="btn btn-danger form-control mt-3" (click)="resetForm(placeorder)">clear</button>    
+    </form>
+</div>

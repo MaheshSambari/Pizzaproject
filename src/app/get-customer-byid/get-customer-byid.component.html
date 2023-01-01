@@ -1,0 +1,35 @@
+<app-admin-menu></app-admin-menu>
+<div class="container">
+    <h3 class=" mt-5">Search Customer By Id</h3>
+<hr/>
+<form #customer1="ngForm" (submit)="getById(customer1.value)">
+    <div class="form-group">
+        <label >
+            Customer Id
+        </label>
+        <input #customerId="ngModel" type="number" [class.is-invalid]="customerId.invalid && customerId.touched" required pattern="^\d{5}$" name="customerId" ngModel="customerId"  class="form-control">
+
+    </div>
+    <div *ngIf="customerId.invalid && customerId.touched">
+        <small class="text-danger" *ngIf="customerId.errors!['required']">Customer Id required</small>
+        <small class="text-danger" *ngIf="customerId.errors!['pattern']">Customer Id required 5 digits</small>
+    </div>
+    <hr/>
+    <div>
+         <button [disabled]="customer1.form.invalid"  class="btn btn-warning m-2">Search</button>
+         
+    </div>
+</form>
+<hr/>
+<h4 class="text-danger " *ngIf="result">{{result.message}}</h4>
+<div *ngIf="customer.customerId>0">
+    <h4>Customer Id: {{customer.customerId}}</h4>
+    <h4>Customer Name: {{customer.customerName}}</h4>
+    <h4>Customer Mobile: {{customer.customerMobile}}</h4>
+    <h4>Customer EmailId: {{customer.customerEmailId}}</h4>
+    <h4>Customer Address: {{customer.customerAddress}}</h4>
+    <h4>Customer User Id: {{customer.userModel.userId}}</h4>
+</div>
+
+    
+</div>

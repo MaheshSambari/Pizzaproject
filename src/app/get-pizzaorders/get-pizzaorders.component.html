@@ -1,0 +1,40 @@
+<app-admin-menu></app-admin-menu>
+<div class="container">
+<h2 class="text-success">All Pizza Orders</h2>
+<!-- <h6 class="alert alert-danger mt-2" *ngIf="result">{{result.successMessage | json}}</h6> -->
+<div *ngIf="pizzaorder!=0; else elseblock">
+    <table class="table table-bordered mt-3">
+        <thead><tr class="bg-warning text-white">
+            <th>Pizza Order Id</th>
+            <th>Pizza  Order Date</th>
+            <th>Transaction Mode</th>
+            <th>Quantity</th>
+            <th>Size</th>
+            <th>Total Cost</th>
+            <th>Pizza Id</th>
+            <th>Order Id</th>
+            <th>Delete</th>
+             </tr>
+        </thead>
+         <tbody>
+            <tr *ngFor="let po of pizzaorder">
+               <td>{{po.pizzaorderId}}</td>
+               <td>{{po.orderDate}}</td>
+               <td>{{po.transactionMode}}</td>
+               <td>{{po.quantity}}</td>
+               <td>{{po.size}}</td>
+               <td>{{po.totalCost | currency:'INR'}}</td>
+               <td>{{po.pizza.pizzaId}}</td>
+               <td>{{po.order.orderId}}</td>
+               <td><button (click)="deletePizzaorders(po.pizzaorderId)" class="btn btn-danger">Delete</button></td>
+              </tr>
+        </tbody>
+      
+      </table>
+</div>
+
+<ng-template #elseblock>
+    <h4 class="btn-danger text-white">No Records Found</h4>
+</ng-template>
+</div>
+

@@ -1,0 +1,35 @@
+<!-- Default form login -->
+<h1 align="center" class="mt-3">Pizza Management System</h1>
+<br/>
+<form class="login-form" >
+<form class="text-center border border-light p-5">
+    <h3>Sign in</h3>
+    <br> 
+    <h6 class="alert alert-danger" *ngIf="result">{{result.message | json}}</h6>
+  <form (submit)="validateAdmin(loginForm)" #loginForm="ngForm">
+    <!-- Admin Id -->
+    <div align="left">
+        <div *ngIf="adminId.invalid && adminId.touched">
+            <small class="text-danger" *ngIf="adminId.errors!['required']">Enter Admin Id</small>
+            <small class="text-danger" *ngIf="adminId.errors!['pattern']">Admin Id must be 5 digits</small>
+        </div> 
+    <input style="font-size: 18pt; height: 40px;" type="number" #adminId="ngModel" [class.is-invalid]="adminId.invalid && adminId.touched" required pattern="^\d{5}$" [(ngModel)]="login.adminId" name="adminId" id="defaultLoginFormId" class="form-control mb-4" placeholder="Admin Id"> 
+    </div>
+    <!-- Password -->
+    <div align="left">
+    <div *ngIf="adminPassword.invalid && adminPassword.touched">
+        <small class="text-danger" *ngIf="adminPassword.errors!['required']">Enter Password</small>
+        <small class="text-danger" *ngIf="adminPassword.errors!['minlength']"> Password must have minimum 5 characters</small>
+        <small class="text-danger" *ngIf="adminPassword.errors!['maxlength']"> Password must have maximum 12 characters</small>
+    </div>
+    <input style="font-size: 18pt; height: 40px;" type="password"  #adminPassword="ngModel" [class.is-invalid]="adminPassword.invalid && adminPassword.touched" required minlength="5" maxlength="12" [(ngModel)]="login.adminPassword" name="adminPassword" id="defaultLoginFormPassword" class="form-control mb-4" placeholder="Password">
+    </div>
+    <!-- Sign in button -->
+    <button  class="btn btn-primary mt-2" [disabled]="loginForm.invalid" type="submit">Sign in</button> &nbsp;
+    <button type="submit" class="btn btn-danger mt-2" (click)="resetForm(loginForm)">clear</button>
+    <div>
+      <br>
+      <!-- Forgot password -->
+      <button class="btn btn-link" (click)="resetAdminPassword()" >Forgot password?</button>
+    </div>
+  </form>

@@ -1,0 +1,51 @@
+<app-menu></app-menu>
+<div class="container">
+    <h3 class="mt-5">Search Pizza By Type</h3>
+<hr/>
+<form #pizza1="ngForm" (submit)="getPizzaByType(pizza1.value)">
+    <div class="form-group mt-3">
+            <select (blur)="validatePizza(type.value)" (change)="validatePizza(type.value)"  #type="ngModel" required type="text" [class.is-invalid]="type.touched && hasError" name="pizzaType" [(ngModel)]="pizza2.pizzaType" class="form-control" >
+                <option value="default">--Select Pizza Type--</option>
+                <option *ngFor="let type of pizzaTypes">{{type}}</option>
+             </select>   
+                <small [class.d-none]="!hasError || type.untouched" class="text-danger">Pizza Type is Must</small>
+    </div>
+    <hr/>
+    <div>
+         <button [disabled]="type.invalid" class="btn btn-warning m-2">Search</button>
+    </div>
+    <h3 class="text-danger" *ngIf="msg; else elseBlock">{{msg}}</h3>
+<ng-template #elseBlock>
+    <div *ngIf="pizza!=0">
+        <table class="table table-bordered mt-3">
+            <thead><tr class="bg-warning text-white">
+                <th>Pizza Id</th>
+                <th>Pizza Name</th>
+                <th>Pizza Type</th>
+                <th>Pizza Cost</th>
+                <th>Available Quantity</th>
+                <th>Pizza Description</th>
+                <th>Add To Cart</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let p of pizza">
+                   <td>{{p.pizzaId}}</td>
+                   <td>{{p.pizzaName}}</td>
+                   <td>{{p.pizzaType}}</td>
+                   <td>{{p.pizzaCost | currency:'INR'}}</td>
+                   <td>{{p.availableQuantity}}</td>
+                   <td>{{p.pizzaDescription}}</td>
+                   <td>
+                    <button class="btn btn-primary" (click)="addToCart(p.pizzaId)" *ngIf="p.availableQuantity>0; else elseBlock">Add To Cart</button>
+                   <ng-template #elseBlock>
+                     <button class="btn btn-primary" disabled (click)="addToCart(p.pizzaId)">Add To Cart</button>
+                   </ng-template>
+                   </td>           
+                 </tr>
+            </tbody>      
+          </table>
+    </div>
+</ng-template>
+</form>
+</div>

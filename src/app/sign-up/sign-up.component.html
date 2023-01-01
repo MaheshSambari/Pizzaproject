@@ -1,0 +1,62 @@
+<div class="container">
+<h1 align="center" class="mt-3">Pizza Management System</h1>
+<br/>
+<form #customer="ngForm" (submit)="registerCustomer(customer)" class="signup-form" > 
+    <h2>Customer Registration</h2>
+    <h6 class="alert alert-success" *ngIf="sresult">{{sresult.successMessage | json}}</h6>
+    <h6 class="alert alert-danger" *ngIf="result">{{result.message | json}}</h6> 
+    <div class="form-group mt-3">
+        <input required #Name="ngModel" placeholder="Customer Name" type="text" [class.is-invalid]="Name.touched && Name.invalid" name="customerName" [(ngModel)]="customerModel.customerName" class="form-control" minlength="5" maxlength="20">
+        <div *ngIf="Name.invalid && Name.touched">
+            <small *ngIf="Name.errors!['required']" class="text-danger">Customer name is Must</small>
+            <small *ngIf="Name.errors!['minlength']" class="text-danger">Customer name Must have minimum 5 characters</small>
+            <small *ngIf="Name.errors!['maxlength']" class="text-danger">Customer name Must have maximum 20 characters</small>
+        </div>
+        
+    </div>
+    <div class="form-group mt-3">
+        <input required #Mobile="ngModel" placeholder="Customer Mobile" pattern="^\d{10}$" type="number" [class.is-invalid]="Mobile.touched && Mobile.invalid" name="customerMobile" [(ngModel)]="customerModel.customerMobile" class="form-control">
+        <div *ngIf="Mobile.invalid && Mobile.touched">
+           <small  class="text-danger" *ngIf="Mobile.errors!['required']">Customer Mobile No is Must</small>
+           <small  class="text-danger" *ngIf="Mobile.errors!['pattern']">Customer Mobile No Must be 10 digits</small>
+
+        </div>      
+    </div>
+    <div class="form-group mt-3">
+        <input required #Email="ngModel" placeholder="Customer Email" type="email" [class.is-invalid]="Email.touched && Email.invalid" name="customerEmailId" [(ngModel)]="customerModel.customerEmailId" class="form-control" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+    <div *ngIf="Email.invalid && Email.touched">
+        <small *ngIf="Email.errors!['required']" class="text-danger">Customer Email is Must</small>
+        <small *ngIf="Email.errors!['pattern']" class="text-danger">Customer Email is not valid</small>
+    </div>   
+    
+    </div>
+    <div class="form-group mt-3">
+       <select (blur)="validateAddress(address.value)" (change)="validateAddress(address.value)" #address="ngModel" required type="text" [class.is-invalid]="address.touched && hasError" name="customerAddress" [(ngModel)]="customerModel.customerAddress" class="form-control mt-3">
+           <option value="default">--Select Address--</option>
+           <option *ngFor="let address of addresses">{{address}}</option>
+        </select>   
+           <small [class.d-none]="!hasError || address.untouched" class="text-danger">Address is Must</small>
+    </div>
+    <div class="form-group mt-3">
+        <input  type="password" required placeholder="Customer Password" #Password="ngModel" [class.is-invalid]="Password.touched && Password.invalid" name="userPassword" [(ngModel)]="userModel.userPassword" class="form-control"minlength="5" maxlength="20">
+        <div *ngIf="Password.invalid && Password.touched">
+            <small *ngIf="Password.errors!['required']" class="text-danger">Customer Password is Must</small>
+            <small *ngIf="Password.errors!['minlength']" class="text-danger">Customer Password Must have minimum 5 characters</small>
+            <small *ngIf="Password.errors!['maxlength']" class="text-danger">Customer Password Must have maximum 20 characters</small>
+        </div>
+    </div>
+    <div>
+        <button [disabled]="customer.form.invalid || hasError" type="submit" class="btn btn-warning form-control mt-3">Create Account</button>
+    </div>
+    <div>
+        <button type="submit" class="btn btn-danger form-control mt-3" (click)="resetForm(customer)">clear</button>    
+    </div>
+    
+    <hr/>
+     <h6 align="center">Already have an Account?</h6>
+     <hr/>
+     <button class="btn btn-link form-control" (click)="signIn()">Sign In</button>
+    </form>
+    <br/>
+    <br/>
+</div>

@@ -1,0 +1,46 @@
+<app-menu></app-menu>
+<div class="container">
+<div class="container">
+    <h3 class="mt-5">Updating Cart Item Details</h3>
+    <hr/>
+    <form #lineitem="ngForm" (submit)="updateItem(lineitem)">
+        <div class="form-group mt-2">
+            <label>
+                Pizza Id
+            </label>
+            <input #id="ngModel" readonly type="number" [class.is-invalid]="id.invalid && id.touched" required pattern="^\d{5}$" name="pizzaId" [(ngModel)]="ItemModel.pizzaId" class="form-control">
+        </div>
+        <div *ngIf="id.invalid && id.touched">
+            <small class="text-danger" *ngIf="id.errors!['required']">Pizza Id is Must</small>
+            <small class="text-danger" *ngIf="id.errors!['pattern']">Pizza Id must have 5 digits</small>
+        </div>
+        <div class="form-group">
+            <label>
+                Customer Id
+            </label>
+            <input #cid="ngModel" readonly type="number" [class.is-invalid]="cid.invalid && cid.touched" required pattern="^\d{5}$" name="customerId" [(ngModel)]="ItemModel.customerId" class="form-control">
+        </div>
+        <div *ngIf="cid.invalid && cid.touched">
+            <small class="text-danger" *ngIf="cid.errors!['required']">Customer Id is Must</small>
+            <small class="text-danger" *ngIf="cid.errors!['pattern']">Customer Id must have 5 digits</small>
+        </div>
+        <div class="form-group">
+            <select (blur)="validateSize(size.value)" (change)="validateSize(size.value)" #size="ngModel" required type="text" [class.is-invalid]="size.touched && hasError" name="size" [(ngModel)]="ItemModel.size" class="form-control mt-3">
+                <option value="default">--Select Size--</option>
+                <option *ngFor="let size of sizes">{{size}}</option>
+             </select>   
+                <small [class.d-none]="!hasError || size.untouched" class="text-danger">Size is Must</small>
+         </div>
+         <div class="form-group">
+            <select (blur)="validateQuantity(Quantity1.value)" (change)="validateQuantity(Quantity1.value)" #Quantity1="ngModel" required type="number" [class.is-invalid]="Quantity1.touched && hasError1" name="quantity" [(ngModel)]="ItemModel.quantity" class="form-control mt-3">
+                <option value="default">--Select quntity--</option>
+                <option *ngFor="let quantity of quantitys">{{quantity}}</option>
+             </select>   
+                <small [class.d-none]="!hasError1 || Quantity1.untouched" class="text-danger">Quantity is Must</small>
+         </div>
+        <hr/>
+        <button [disabled]="lineitem.invalid || hasError || hasError1" type="submit" class="btn btn-warning form-control">Update</button>
+        <button type="submit" class="btn btn-danger form-control mt-3" (click)="resetForm(lineitem)">clear</button>    
+    </form>
+</div>
+</div>
